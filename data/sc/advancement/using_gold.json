@@ -1,0 +1,10 @@
+{
+  "criteria": {"hold": {
+    "trigger": "minecraft:using_item",
+    "conditions": {"item": {
+      "items": "minecraft:golden_spear",
+      "predicates": {"minecraft:custom_data": "{sc_kit:1b}"}
+    }}
+  }},
+  "rewards": {"function": "sc:gravity/use"}
+}

@@ -1,0 +1,25 @@
+{
+  "description": {"text":"突刺平射"},
+  "supported_items": "minecraft:golden_spear",
+  "weight": 1,
+  "max_level": 1,
+  "min_cost": {"base":1,"per_level_above_first":0},
+  "max_cost": {"base":1,"per_level_above_first":0},
+  "anvil_cost": 1,
+  "slots": ["mainhand"],
+  "effects": {
+    "minecraft:post_piercing_attack": [{
+      "effect": {"type":"minecraft:run_function","function":"sc:player/on_dash"},
+      "requirements": {
+        "type":"minecraft:all_of",
+        "terms":[
+          {"type":"minecraft:entity_properties","entity":"this","predicate":{
+            "minecraft:flags":{"is_in_water":false,"is_fall_flying":false},
+            "minecraft:type_specific/player":{"food":{"level":{"min":7}}}
+          }},
+          {"type":"minecraft:inverted","term":{"type":"minecraft:entity_properties","entity":"this","predicate":{"minecraft:vehicle":{}}}}
+        ]
+      }
+    }]
+  }
+}

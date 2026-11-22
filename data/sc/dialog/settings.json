@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:multi_action",
+  "title": {
+    "text": "⚙ 硫方涂境 · 比赛设置",
+    "color": "gold",
+    "bold": true
+  },
+  "pause": false,
+  "columns": 2,
+  "body": {
+    "type": "minecraft:plain_message",
+    "contents": {
+      "text": "当前比赛设置显示在大厅悬浮看板上。踩地安全时间、右键反色门槛等规则可在开赛前调整。",
+      "color": "gray"
+    },
+    "width": 320
+  },
+  "actions": [
+    {
+      "label": {
+        "text": "调整比赛规则",
+        "color": "yellow"
+      },
+      "width": 145,
+      "action": {
+        "type": "run_command",
+        "command": "trigger sc_cfg set 1"
+      }
+    },
+    {
+      "label": {
+        "text": "玩法与操作说明",
+        "color": "green"
+      },
+      "width": 145,
+      "action": {
+        "type": "run_command",
+        "command": "trigger sc_cfg set 2"
+      }
+    },
+    {
+      "label": {
+        "text": "恢复默认设置",
+        "color": "red"
+      },
+      "width": 145,
+      "action": {
+        "type": "run_command",
+        "command": "trigger sc_cfg set 3"
+      }
+    }
+  ],
+  "exit_action": {
+    "label": "关闭"
+  }
+}

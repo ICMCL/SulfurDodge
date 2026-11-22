@@ -1,0 +1,8 @@
+$fill -7 65 -6 -7 66 -4 $(wall)
+$fill -7 67 -6 -7 68 -4 $(cap)
+$fill -7 65 4 -7 66 6 $(wall)
+$fill -7 67 4 -7 68 6 $(cap)
+$fill 7 65 -6 7 66 -4 $(wall)
+$fill 7 67 -6 7 68 -4 $(cap)
+$fill 7 65 4 7 66 6 $(wall)
+$fill 7 67 4 7 68 6 $(cap)

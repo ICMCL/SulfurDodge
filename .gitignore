@@ -1,0 +1,17 @@
+# Generated archives and Python caches
+/dist/
+*.zip
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+
+# Local validation output
+/tests/evidence/
+
+# Minecraft world and player data
+/dimensions/
+/players/
+/level.dat*
+/session.lock
+/logs/

@@ -1,0 +1,48 @@
+{
+  "description": {
+    "text": "竞技免伤护甲"
+  },
+  "supported_items": "#minecraft:chest_armor",
+  "weight": 1,
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "max_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "anvil_cost": 1,
+  "slots": [
+    "chest"
+  ],
+  "effects": {
+    "minecraft:prevent_armor_change": {},
+    "minecraft:tick": [
+      {
+        "requirements": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": { "food": { "saturation": { "min": 0.000001 } } }
+          }
+        },
+        "effect": { "type": "minecraft:apply_exhaustion", "amount": 4.001 }
+      }
+    ],
+    "minecraft:damage_immunity": [
+      {
+        "requirements": {
+          "type": "minecraft:damage_source_properties",
+          "predicate": {
+            "source_entity": {
+              "minecraft:entity_type": "minecraft:player"
+            }
+          }
+        },
+        "effect": {}
+      }
+    ]
+  }
+}

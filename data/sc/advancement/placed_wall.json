@@ -1,0 +1,16 @@
+{
+  "criteria": {
+    "place": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": {
+          "type": "minecraft:match_block",
+          "blocks": "minecraft:mud_bricks"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "sc:arena/on_place_wall"
+  }
+}
