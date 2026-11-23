@@ -1,27 +1,33 @@
-# 安装和小局开始共用。只重建永久外圈，不动看台或缩墙内场。
-fill -15 64 -11 15 70 -11 quartz_bricks
-fill -15 64 11 15 70 11 quartz_bricks
-fill -15 64 -11 -15 70 11 polished_blackstone_bricks
-fill 15 64 -11 15 70 11 polished_blackstone_bricks
-fill -15 69 -6 -15 69 6 red_concrete
-fill 15 69 -6 15 69 6 blue_concrete
-setblock -15 69 -10 sea_lantern
-setblock -15 69 0 sea_lantern
-setblock -15 69 10 sea_lantern
-setblock 15 69 -10 sea_lantern
-setblock 15 69 0 sea_lantern
-setblock 15 69 10 sea_lantern
-setblock -8 69 -11 sea_lantern
-setblock 8 69 -11 sea_lantern
-setblock -8 69 11 sea_lantern
-setblock 8 69 11 sea_lantern
-setblock 0 65 -11 chiseled_quartz_block
-setblock 0 66 -11 sea_lantern
-setblock -1 67 -11 yellow_concrete
-setblock 0 67 -11 sea_lantern
-setblock 1 67 -11 yellow_concrete
-setblock 0 65 11 chiseled_quartz_block
-setblock 0 66 11 sea_lantern
-setblock -1 67 11 yellow_concrete
-setblock 0 67 11 sea_lantern
-setblock 1 67 11 yellow_concrete
+# 29×21 樱庭 3 格雕花矮墙与上层隐形屏障重置（自动由 tools/build_map.py 导出）
+fill -15 64 -11 15 65 -11 tuff_bricks
+fill -15 64 11 15 65 11 tuff_bricks
+fill -15 64 -11 -15 65 11 tuff_bricks
+fill 15 64 -11 15 65 11 tuff_bricks
+fill -15 66 -11 15 66 -11 polished_tuff
+fill -15 66 11 15 66 11 polished_tuff
+fill -15 66 -11 -15 66 11 polished_tuff
+fill 15 66 -11 15 66 11 polished_tuff
+fill -15 66 -5 -15 66 5 crimson_planks
+fill 15 66 -5 15 66 5 warped_planks
+fill -15 64 -11 -15 66 -11 polished_deepslate
+setblock -15 66 -11 pearlescent_froglight
+fill -15 64 11 -15 66 11 polished_deepslate
+setblock -15 66 11 pearlescent_froglight
+fill 15 64 -11 15 66 -11 polished_deepslate
+setblock 15 66 -11 pearlescent_froglight
+fill 15 64 11 15 66 11 polished_deepslate
+setblock 15 66 11 pearlescent_froglight
+setblock -8 66 -11 pearlescent_froglight
+setblock -8 66 11 pearlescent_froglight
+setblock 8 66 -11 pearlescent_froglight
+setblock 8 66 11 pearlescent_froglight
+setblock -15 66 0 pearlescent_froglight
+setblock 15 66 0 pearlescent_froglight
+fill -1 65 -11 1 66 -11 chiseled_tuff
+setblock 0 66 -11 pearlescent_froglight
+fill -1 65 11 1 66 11 chiseled_tuff
+setblock 0 66 11 pearlescent_froglight
+fill -15 67 -11 15 70 -11 barrier
+fill -15 67 11 15 70 11 barrier
+fill -15 67 -11 -15 70 11 barrier
+fill 15 67 -11 15 70 11 barrier

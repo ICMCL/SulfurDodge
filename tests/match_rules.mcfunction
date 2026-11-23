@@ -41,7 +41,7 @@ tp @e[tag=sc_test_ball] -12.51 65 0.5
 scoreboard players set @e[tag=sc_test_ball] sc_heavy 0
 execute as @e[tag=sc_test_wall] at @s run function sc:arena/pwall_step
 execute unless block -14 65 0 packed_mud run scoreboard players add #errors sc_var 1
-execute unless block -15 65 -1 polished_blackstone_bricks run scoreboard players add #errors sc_var 1
+execute unless block -15 65 -1 tuff_bricks run scoreboard players add #errors sc_var 1
 scoreboard players set @e[tag=sc_test_wall] sc_swap_cd 0
 execute as @e[tag=sc_test_wall] at @s run function sc:arena/pwall_step
 execute unless block -14 65 0 air run scoreboard players add #errors sc_var 1
@@ -53,20 +53,20 @@ scoreboard players set @e[tag=sc_test_ball] sc_heavy 1
 execute as @e[tag=sc_test_wall] at @s run function sc:arena/pwall_step
 execute if entity @e[tag=sc_test_wall] run scoreboard players add #errors sc_var 1
 execute unless block -14 65 0 air run scoreboard players add #errors sc_var 1
-execute unless block -15 65 -1 polished_blackstone_bricks run scoreboard players add #errors sc_var 1
+execute unless block -15 65 -1 tuff_bricks run scoreboard players add #errors sc_var 1
 
 # The blast must not carve a hole even if a stale marker occupies a shrink wall.
 summon marker -11.5 65 0.5 {Tags:["sc_pwall","sc_test_blast"]}
-fill -12 65 0 -12 68 0 quartz_bricks
+fill -12 65 0 -12 66 0 tuff_bricks
 execute as @e[tag=sc_test_ball] at @s run function sc:cube/explode
 execute if entity @e[tag=sc_test_blast] run scoreboard players add #errors sc_var 1
-execute unless block -12 65 0 quartz_bricks run scoreboard players add #errors sc_var 1
-execute unless block -15 65 0 polished_blackstone_bricks run scoreboard players add #errors sc_var 1
+execute unless block -12 65 0 tuff_bricks run scoreboard players add #errors sc_var 1
+execute unless block -15 65 0 tuff_bricks run scoreboard players add #errors sc_var 1
 
 # Neutral sliding leaves the board alone. A neutral explosion clears only the shared disc.
 fill -4 64 -4 -1 64 4 red_concrete
 fill 0 64 -4 4 64 4 blue_concrete
-setblock 0 64 1 quartz_bricks
+setblock 0 64 1 tuff_bricks
 summon minecraft:sulfur_cube 0.5 65 0.5 {Size:1,Tags:["sc_ball","sc_wash_test"],equipment:{body:{id:"minecraft:tnt",count:1}}}
 execute as @e[tag=sc_wash_test] at @s run function sc:cube/init
 execute as @e[tag=sc_wash_test] at @s run function sc:cube/step
@@ -81,7 +81,7 @@ execute unless score #want_red sc_var = #r_tiles sc_var run scoreboard players a
 execute unless score #want_blue sc_var = #b_tiles sc_var run scoreboard players add #errors sc_var 1
 execute unless block -3 64 1 light_gray_concrete run scoreboard players add #errors sc_var 1
 execute unless block 3 64 1 light_gray_concrete run scoreboard players add #errors sc_var 1
-execute unless block 0 64 1 quartz_bricks run scoreboard players add #errors sc_var 1
+execute unless block 0 64 1 tuff_bricks run scoreboard players add #errors sc_var 1
 execute unless block -3 64 2 red_concrete run scoreboard players add #errors sc_var 1
 execute unless block 3 64 2 blue_concrete run scoreboard players add #errors sc_var 1
 
@@ -126,27 +126,28 @@ execute unless score #parry_min sc_var matches 300 run scoreboard players add #e
 execute as @e[tag=sc_test_host] run function sc:cube/set_horizontal
 execute unless entity @e[tag=sc_test_host,scores={sc_vx=574,sc_vz=-574}] run scoreboard players add #errors sc_var 1
 
-# Compare the entire glass floor and the entire open sky above the lobby.
-fill -14 40 -10 14 40 10 glass
-fill -16 41 -18 16 41 12 air
-execute unless blocks -14 71 -10 14 71 10 -14 40 -10 all run scoreboard players add #errors sc_var 1
-execute unless blocks -16 78 -18 16 78 12 -16 41 -18 all run scoreboard players add #errors sc_var 1
-execute unless block 16 77 0 barrier run scoreboard players add #errors sc_var 1
-execute unless block 0 72 -13 smooth_quartz run scoreboard players add #errors sc_var 1
+# Verify bound .mca Sakura Cloud Courtyard static architecture, open-air barrier containment, and Zen paintable floor.
+execute unless block 0 69 -17 calcite run scoreboard players add #errors sc_var 1
+execute unless block 0 69 -16 emerald_block run scoreboard players add #errors sc_var 1
+execute unless block 0 70 -16 stone_button run scoreboard players add #errors sc_var 1
+execute unless block 0 70 -15 lectern[facing=north] run scoreboard players add #errors sc_var 1
+execute unless block 0 58 0 chest run scoreboard players add #errors sc_var 1
+execute unless block -21 63 0 water run scoreboard players add #errors sc_var 1
+execute unless block 0 71 0 barrier run scoreboard players add #errors sc_var 1
 
 # Test regular and heavy contact against a fixed wall. The same subsequent blast hits both materials.
-function sc:arena/fixed_walls {wall:"stone_bricks",cap:"barrier"}
+function sc:arena/fixed_walls {wall:"polished_tuff",cap:"barrier"}
 summon sulfur_cube 8.48 65 5.5 {Size:1,Tags:["sc_ball","sc_test_impact"],equipment:{body:{id:"minecraft:tnt",count:1}}}
 execute as @e[tag=sc_test_impact] at @s run function sc:cube/init
 function sc:arena/walls_tick
-execute unless block 7 65 5 stone_bricks run scoreboard players add #errors sc_var 1
+execute unless block 7 65 5 polished_tuff run scoreboard players add #errors sc_var 1
 scoreboard players set @e[tag=sc_test_impact] sc_heavy 1
 function sc:arena/walls_tick
-execute unless block 7 65 5 stone_bricks run scoreboard players add #errors sc_var 1
+execute unless block 7 65 5 polished_tuff run scoreboard players add #errors sc_var 1
 summon marker 9.5 65 5.5 {Tags:["sc_pwall"]}
 fill 9 65 5 9 66 5 mud_bricks
 execute as @e[tag=sc_test_impact] at @s run function sc:cube/explode
-execute unless block 7 65 5 stone_bricks run scoreboard players add #errors sc_var 1
+execute unless block 7 65 5 polished_tuff run scoreboard players add #errors sc_var 1
 execute unless block 9 65 5 air run scoreboard players add #errors sc_var 1
 scoreboard players set #collapse_stage sc_var 3
 function sc:arena/collapse_step
@@ -199,6 +200,6 @@ execute unless score #state sc_var matches 0 run scoreboard players add #errors 
 execute unless data storage sc:game {result:{color:"yellow"}} run scoreboard players add #errors sc_var 1
 function sc:cfg/defaults
 execute unless score #cfg_dur sc_var matches 90 run scoreboard players add #errors sc_var 1
-execute unless blocks -14 71 -10 14 71 10 -14 40 -10 all run scoreboard players add #errors sc_var 1
+execute unless block 0 71 0 barrier run scoreboard players add #errors sc_var 1
 execute if score #errors sc_var matches 0 run say SC_RULES_OK
 execute unless score #errors sc_var matches 0 run say SC_RULES_FAILED

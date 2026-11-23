@@ -1,6 +1,8 @@
 {
   "values": [
     "minecraft:light_gray_concrete",
+    "minecraft:calcite",
+    "minecraft:tuff",
     "minecraft:blue_concrete"
   ]
 }

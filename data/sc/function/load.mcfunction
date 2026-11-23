@@ -82,4 +82,5 @@ scoreboard players display name rem_sec sc_side {text:"剩余时间(秒)",color:
 bossbar add sc:match {text:"硫方涂境",color:"gold"}
 execute if score #state sc_var matches 0 run bossbar set sc:match visible false
 
-tellraw @a [{text:"[硫方涂境] ",color:"gold",bold:true},{text:"数据包已加载 (Java 26.3)。首次搭建大厅与球场请输入 ",color:"white",bold:false},{text:"/function sc:install",color:"aqua",bold:false,click_event:{action:"suggest_command",command:"/function sc:install"}}]
+# 每次 load / reload 重新同步大厅悬浮实体，兼容绑定 .mca 存档即开即玩
+scoreboard players set #lobby_synced sc_var 0

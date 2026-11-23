@@ -1,0 +1,49 @@
+{
+  "slug": "sulfur-dodge",
+  "namespace": "sc",
+  "title": "硫方涂境",
+  "description": "双队物理弹射 × 枯山水石庭泼墨染色 × 生存淘汰对抗（Minecraft Java 26.3）",
+  "biome": "minecraft:cherry_grove",
+  "spawn": {
+    "pos": [0, 70, -17],
+    "yaw": 0.0,
+    "pitch": 20.0
+  },
+  "build_script": "tools/build_map.py",
+  "preview_shots": [
+    {
+      "file": "preview_overview.png",
+      "cam": [-37.0, 96.0, 34.0],
+      "look_at": [0.0, 66.0, -3.0],
+      "fov": 45.0,
+      "title": "硫方涂境 · 樱庭云阶浮岛（全景鸟瞰）",
+      "subtitle": "26.3 .mca 原生区块渲染 · 凝灰岩方解石层叠浮岛 · 六株盛放古樱 · 枯山水可染石庭"
+    },
+    {
+      "file": "preview_court.png",
+      "cam": [0.5, 79.5, -16.5],
+      "look_at": [0.5, 64.8, 1.5],
+      "fov": 56.0,
+      "title": "樱庭北阁俯瞰视角（无玻璃顶网格遮挡）",
+      "subtitle": "29×21 枯山水几何可染石庭 · 紫水晶弹珠偏转柱 · 3 格雕花矮墙叠隐形屏障"
+    },
+    {
+      "file": "preview_lobby.png",
+      "cam": [0.5, 76.5, -7.0],
+      "look_at": [0.5, 70.0, -17.0],
+      "fov": 56.0,
+      "title": "北侧飞檐樱阁大厅 & 红蓝选队亭",
+      "subtitle": "苍白橡木观景回廊 · 朱红/群青条纹选队亭 · 中央高台开始按钮与讲台菜单"
+    }
+  ],
+  "extra_preview_voxels": [
+    { "pos": [-3, 64, -1], "block": "minecraft:red_concrete" },
+    { "pos": [-4, 64, -1], "block": "minecraft:red_concrete" },
+    { "pos": [-2, 64, 0], "block": "minecraft:red_concrete" },
+    { "pos": [-2, 65, 0], "block": "minecraft:tnt" },
+    { "pos": [3, 64, 1], "block": "minecraft:blue_concrete" },
+    { "pos": [4, 64, 1], "block": "minecraft:blue_concrete" },
+    { "pos": [2, 64, 0], "block": "minecraft:blue_concrete" },
+    { "pos": [2, 65, 0], "block": "minecraft:tnt" }
+  ]
+}

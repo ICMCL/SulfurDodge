@@ -1,4 +1,6 @@
 # ===== 硫方涂境 · 全局主循环 =====
+execute unless score #lobby_synced sc_var matches 1 in minecraft:overworld if loaded 0 64 0 run function sc:internal/world_boot
+
 scoreboard players add #gt sc_var 1
 scoreboard players operation #g20 sc_var = #gt sc_var
 scoreboard players operation #g20 sc_var %= #20 sc_const

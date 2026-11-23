@@ -9,9 +9,7 @@ __pycache__/
 # Local validation output
 /tests/evidence/
 
-# Minecraft world and player data
-/dimensions/
-/players/
-/level.dat*
-/session.lock
+# Runtime player/session files if opened directly
+/world/players/
+/world/session.lock
 /logs/

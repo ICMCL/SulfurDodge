@@ -23,11 +23,37 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 public class PlayerMechanicsTest {
+    static void copyTree(Path src, Path dst) {
+        try (var stream = Files.walk(src)) {
+            for (var p : stream.toList()) {
+                var target = dst.resolve(src.relativize(p));
+                if (Files.isDirectory(p)) {
+                    Files.createDirectories(target);
+                } else {
+                    Files.createDirectories(target.getParent());
+                    Files.copy(p, target, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
+        net.minecraft.SharedConstants.tryDetectVersion();
         TestFunctionLoader.registerLoader(register -> register.accept(
             ResourceKey.create(Registries.TEST_FUNCTION, Identifier.parse("sc_test:player")), PlayerMechanicsTest::run));
-        net.minecraft.gametest.Main.main(args);
+        var templateProp = System.getProperty("sc.templateWorld", System.getProperty("mc.templateWorld"));
+        net.minecraft.gametest.framework.GameTestMainUtil.runGameTestServer(args, universe -> {
+            if (templateProp != null && !templateProp.isEmpty()) {
+                copyTree(Path.of(templateProp), Path.of(universe, "gametestworld"));
+            }
+        });
     }
 
     static void command(ServerPlayer p, String line) {
@@ -177,7 +203,7 @@ public class PlayerMechanicsTest {
                 "direct shot did not burst on enemy body");
         command(p, "kill @e[type=wind_charge]");
         command(p, "fill -14 64 -10 14 64 10 blue_concrete");
-        h.assertTrue(server.getRespawnData().pos().equals(new net.minecraft.core.BlockPos(0, 73, -13)),
+        h.assertTrue(server.getRespawnData().pos().equals(new net.minecraft.core.BlockPos(0, 70, -17)),
                 "install did not set the lobby spawn");
         command(blue, "kill @s");
         h.assertTrue(blue.isDeadOrDying(), "expected a real death before respawn");
@@ -185,18 +211,18 @@ public class PlayerMechanicsTest {
         blue.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));
         blue = oldBlue.connection.player;
         h.assertTrue(blue != oldBlue && !blue.isDeadOrDying(), "client respawn did not replace the dead player");
-        h.assertTrue(blue.getX() == 0.5 && blue.getY() == 73 && blue.getZ() == -12.5
+        h.assertTrue(blue.getX() == 0.5 && blue.getY() == 70 && blue.getZ() == -16.5
                 && !blue.level().noCollision(blue, blue.getBoundingBox().move(0, -0.01, 0)),
                 "native respawn must already be standing on the lobby pad before any teleport: " + blue.position());
         blue.connection.handleAcceptPlayerLoad(new ServerboundPlayerLoadedPacket());
         command(p, "function sc:game/active_tick");
         command(p, "execute unless data storage sc:game {result:{color:\"red\"}} run tag @s add sc_test_wrong_result");
-        h.assertTrue(matchScore(p, "#state") == 0 && !p.entityTags().contains("sc_test_wrong_result") && p.getY() == 73 && blue.getY() == 73,
+        h.assertTrue(matchScore(p, "#state") == 0 && !p.entityTags().contains("sc_test_wrong_result") && p.getY() == 70 && blue.getY() == 70,
                 "elimination must beat territory and return both teams");
-        blue.snapTo(2.5, 72, 0.5, 0, 0);
+        blue.snapTo(-4.5, 69, -12.5, 0, 0);
         command(blue, "function sc:lobby/ensure_present");
-        h.assertTrue(blue.getX() == 2.5 && blue.getY() == 72 && blue.getZ() == 0.5,
-                "player already watching from the glass should stay there");
+        h.assertTrue(blue.getX() == -4.5 && blue.getY() == 69 && blue.getZ() == -12.5,
+                "player already watching from the north veranda should stay there");
 
         command(p, "function sc:cfg/defaults");
         command(p, "function sc:game/start");
@@ -416,11 +442,13 @@ public class PlayerMechanicsTest {
         useTicks(p, 20);
         h.assertTrue(food.getFoodLevel() == 8, "holding gravity consumed food");
         food.setFoodLevel(6);
+        red.setDeltaMovement(0.5, 0.07, 0);
         rv = red.getDeltaMovement();
         useTicks(p, 1);
         h.assertTrue(!red.getDeltaMovement().equals(rv), "low-food player could not apply gravity");
         h.assertTrue(food.getFoodLevel() == 6, "low-food gravity consumed food");
         p.getInventory().setSelectedSlot(0);
+        rv = red.getDeltaMovement();
         food.setFoodLevel(20);
         useTicks(p, 8);
         h.assertTrue(!p.isUsingItem() && red.getDeltaMovement().equals(rv), "switching away from gold left the field active");
@@ -436,6 +464,11 @@ public class PlayerMechanicsTest {
         // A real client acknowledges the level load; until then the server ignores all damage.
         p.connection.handleAcceptPlayerLoad(new net.minecraft.network.protocol.game.ServerboundPlayerLoadedPacket());
         p.setGameMode(GameType.ADVENTURE);
+        p.snapTo(0.5, 70.0, -16.5, 0, 20);
+        h.getLevel().getChunkSource().tick(() -> true, true);
+        command(p, "function sc_test:rules");
+        h.assertTrue(matchScore(p, "#errors") == 0, "sc_test:rules assertions failed: errors=" + matchScore(p, "#errors"));
+        command(p, "function sc:arena/reset_round");
         p.getFoodData().setFoodLevel(1);
         p.getInventory().setItem(4, new ItemStack(Items.EMERALD, 3));
         command(p, "team join red @s");
@@ -485,7 +518,7 @@ public class PlayerMechanicsTest {
         checkDashShot(h, p);
         checkJab(h, p, spear);
         command(p, "function sc:game/check_alive");
-        h.assertTrue(!p.entityTags().contains("sc_ingame") && p.getY() == 73, "match ended without immediately returning player");
+        h.assertTrue(!p.entityTags().contains("sc_ingame") && p.getY() == 70, "match ended without immediately returning player");
         var restored = p.getInventory().getItem(4);
         h.assertTrue(restored.is(Items.EMERALD) && restored.getCount() == 3, "match did not restore the original inventory");
         checkEndless(h, p);
